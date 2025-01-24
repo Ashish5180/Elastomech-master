@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Cookies from "js-cookie";
 import WorkerDashboard from "./pages/Worker/Dashboard";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import Inventory from "./pages/Admin/Inventory";
@@ -23,13 +24,7 @@ import FormulaInventory from "./pages/Admin/FormulaInventory";
 import ProductBin from "./pages/Admin/ProductBin";
 import ProductInventory from "./pages/Admin/ProductInventory";
 import TranslationService from "./utils/TranslationService";
-
-// Protected Route Component
-const ProtectedRoute = ({ children, requiredRole, user }) => {
-  if (!user) return <Navigate to="/" replace />;
-  if (user.role !== requiredRole) return <Navigate to="/" replace />;
-  return children;
-};
+import ProtectedRoute from "./pages/Protected"; // Import ProtectedRoute
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -46,12 +41,14 @@ const App = () => {
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
     localStorage.setItem("user", JSON.stringify(loggedInUser)); // Persist user
+    Cookies.set("token", loggedInUser.token); // Store token in cookies
   };
 
   // Function to handle logout
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user"); // Clear user from storage
+    Cookies.remove("token"); // Remove token from cookies
   };
 
   return (
@@ -73,41 +70,126 @@ const App = () => {
               {/* Worker Routes */}
               <Route
                 path="/worker"
-                element={<WorkerDashboard onLogout={handleLogout} />}
+                element={
+                  <ProtectedRoute requiredRole="worker">
+                    <WorkerDashboard onLogout={handleLogout} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/worker/inventory" element={<Inventory />} />
-              <Route path="/worker/orders" element={<Orders />} />
-              <Route path="/worker/formula-bin" element={<FormulaBin />} />
-              <Route path="/worker/add-order" element={<AddOrder />} />
+              <Route
+                path="/worker/inventory"
+                element={
+                  <ProtectedRoute requiredRole="worker">
+                    <Inventory />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/worker/orders"
+                element={
+                  <ProtectedRoute requiredRole="worker">
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/worker/formula-bin"
+                element={
+                  <ProtectedRoute requiredRole="worker">
+                    <FormulaBin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/worker/add-order"
+                element={
+                  <ProtectedRoute requiredRole="worker">
+                    <AddOrder />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Admin Routes */}
               <Route
                 path="/admin"
-                element={<AdminDashboard onLogout={handleLogout} />}
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard onLogout={handleLogout} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/admin/inventory" element={<Inventory />} />
-              <Route path="/admin/orders" element={<Orders />} />
-              <Route path="/admin/formula-bin" element={<FormulaBin />} />
-
+              <Route
+                path="/admin/inventory"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <Inventory />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/orders"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/formula-bin"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <FormulaBin />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/admin/add-order"
-                element={<OrderInputPageAdmin />}
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <OrderInputPageAdmin />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/admin/board" element={<CustomKanban />} />
+              <Route
+                path="/admin/board"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <CustomKanban />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/admin/inventorylogging"
-                element={<InventoryLogging />}
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <InventoryLogging />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/admin/formulaInventory"
-                element={<FormulaInventory />}
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <FormulaInventory />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/admin/productBin" element={<ProductBin />} />
+              <Route
+                path="/admin/productBin"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <ProductBin />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/admin/productinventory"
-                element={<ProductInventory />}
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <ProductInventory />
+                  </ProtectedRoute>
+                }
               />
-           
 
               {/* Catch-all Route */}
               <Route path="*" element={<Navigate to="/" replace />} />
