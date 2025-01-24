@@ -28,7 +28,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3001",
   credentials: true, // Allows cookies to be sent with requests
 }));
 app.use(bodyParser.json());

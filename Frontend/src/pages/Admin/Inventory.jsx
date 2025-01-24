@@ -365,7 +365,7 @@ const Inventory = () => {
                 <td className="py-3 px-4 border-b border-gray-300">
                   {isEditing && (
                     <button
-                      onClick={() => handleDeleteItem(item._id)}
+                      onClick={() => handleDeleteItem(item.name)}
                       className="px-4 py-2 rounded-lg bg-red-600 text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
                     >
                       <FaTrashAlt />
