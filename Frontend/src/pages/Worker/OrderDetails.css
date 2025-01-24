@@ -1,0 +1,113 @@
+/* Container layout */
+.orders-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 240px;
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  height: 100%;
+}
+
+.orders-content {
+  margin-left: 240px; /* Sidebar width */
+  padding: 20px;
+  width: calc(100% - 240px);
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Table Styling */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table th, .orders-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  background-color: #003366;
+  color: white;
+}
+
+.orders-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.orders-table tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Buttons */
+button {
+  padding: 8px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-complete {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-complete:hover {
+  background-color: #218838;
+}
+
+.btn-pending {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-pending:hover {
+  background-color: #e0a800;
+}
+
+/* Dropdowns */
+select {
+  padding: 8px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Headings */
+h2 {
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
+
+  .orders-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .orders-table th, .orders-table td {
+    font-size: 0.85rem;
+  }
+}
